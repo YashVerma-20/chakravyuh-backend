@@ -1,0 +1,17 @@
+node_modules/
+*.db
+*.log
+.env
+.env.local
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Database files
+chakravyuh.db
+
+# Temporary scripts
+check-db.js
+test-question-access.js
+fix-assign-questions.js
