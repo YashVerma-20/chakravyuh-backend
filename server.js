@@ -13,7 +13,9 @@ app.use(cors({
         'http://localhost:3000',
         'http://localhost:5173',
         'https://chakravuyhcg.vercel.app',
-        'https://chakravyuh-kappa.vercel.app'
+        'https://chakravyuh-kappa.vercel.app',
+        /\.railway\.app$/,  // Allow all Railway domains
+        /\.vercel\.app$/    // Allow all Vercel domains
     ],
     credentials: true
 }));
