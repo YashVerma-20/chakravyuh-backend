@@ -5,7 +5,7 @@
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node server.js",
+    "start": "node init-db.js && node add-questions.js && node server.js",
     "dev": "nodemon server.js",
     "setup-db": "node scripts/setup-database.js",
     "seed": "node scripts/seed-database.js"
