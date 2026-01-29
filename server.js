@@ -6,19 +6,39 @@ const helmet = require('helmet');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// ✅ Allowed frontend origins (explicit & safe)
+const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'https://chakravuyhcg.vercel.app',
+    'https://chakravyuh-kappa.vercel.app',
+    'https://chakravyuh-sepia.vercel.app',
+    'https://chakravuyh-63991bvpy-yash-vermas-projects-5b24ecb9.vercel.app'
+];
+
 // Middleware
 app.use(helmet());
+
+// ✅ FIXED CORS (works with credentials + Vercel)
 app.use(cors({
-    origin: [
-        'http://localhost:3000',
-        'http://localhost:5173',
-        'https://chakravuyhcg.vercel.app',
-        'https://chakravyuh-kappa.vercel.app',
-        /\.railway\.app$/,  // Allow all Railway domains
-        /\.vercel\.app$/    // Allow all Vercel domains
-    ],
+    origin: function (origin, callback) {
+        // Allow non-browser requests (Postman, server-to-server)
+        if (!origin) return callback(null, true);
+
+        if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+
+        return callback(new Error('Not allowed by CORS'));
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
 }));
+
+// ✅ IMPORTANT: handle preflight requests
+app.options('*', cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
